@@ -13,7 +13,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='!')
 
 NSFW_BOARDS = [
-'b', 'd', 'gif', 'r9k'
+'h', 'd', 'gif'
 ]
 
 
@@ -34,10 +34,10 @@ async def shitpost(ctx, board):
 
     cleansed_board = board.replace( '/', '' )
 
-    # if ctx.channel_is_nsfw() is False:
-    #     if cleansed_board in NSFW_BOARDS:
-    #         ctx.send('No lewds in this channel!')
-    #         return
+    if ctx.channel.is_nsfw() is False:
+        if cleansed_board in NSFW_BOARDS:
+            await ctx.send('No lewds in this channel!!!')
+            return
 
 
     
