@@ -1,5 +1,6 @@
 # bot.py
 import os
+import re
 import shitposter
 
 import discord
@@ -85,12 +86,13 @@ async def image(ctx, board):
     await ctx.send(message)
 
 
-
 @bot.command(name='boards', help='Lists the loaded boards!')
 async def boards(ctx):
     loaded_boards = shitposter.loaded_boards()
 
-    ctx.send(f'Command not implemented yet, sorry!')
+    boards = '/, /'.join(loaded_boards)
+
+    ctx.send(f'I have the following boards loaded!: {boards}')
 
 
 bot.run(TOKEN)

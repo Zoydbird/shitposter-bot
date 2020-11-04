@@ -93,6 +93,19 @@ def board_loaded( board ):
 
     return True
 
+def loaded_boards():
+    dirs = os.listdir('./data')
+
+    boards = []
+
+    for dir in dirs:
+        boards.append(re.split('-', dir)[0])
+
+    #unique the boards
+    unique_loaded_boards = list(set(boards))
+
+    return(unique_loaded_boards)
+
 def grab_image(images, board):
     return 'http://i.4cdn.org/' + board + '/' + choice(images)
 
