@@ -1,0 +1,3 @@
+pymarkovchain
+discord.py
+dotenv
