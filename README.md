@@ -8,6 +8,8 @@ I've since re-hosted the repo, and have made some changes to the shitposter.py m
 
 There are some horrible things posted on 4chan, so if you would like to use this bot I apologise but take no responsibilty if it posts some of said horrible things.
 
+If after that warning you'd still like this bot in your server, dm me on twitter @zoydberg, can share the link to add it with you.
+
 If you'd like to contribute to this project, raise an issue for something you'd like added, or raise a pull request for something you have added!
 
 # Dependencies
