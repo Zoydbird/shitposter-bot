@@ -58,12 +58,10 @@ async def load(ctx, board):
 
     cleansed_board = board.replace( '/', '' )
     
-    if ctx.author.id == USER_ID:
+    if ctx.author.id == int(USER_ID):
         await ctx.send(f'Loading posts for {board}, bare with a few minutes...')
         mc, images = shitposter.load_or_train_board(cleansed_board)
         await ctx.send(f'{board} loaded')
-    else:
-        await ctx.send('No, you cannot load')
     
 
 # @bot.command(name='boards', help='Lists the loaded boards!')
