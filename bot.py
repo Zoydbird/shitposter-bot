@@ -92,7 +92,7 @@ async def boards(ctx):
 
     boards = '/, /'.join(loaded_boards)
 
-    ctx.send(f'I have the following boards loaded!: {boards}')
+    await ctx.send(f'I have the following boards loaded!: {boards}')
 
 
 bot.run(TOKEN)
