@@ -70,6 +70,16 @@ def analyze_board( mc, board ):
 
     return images
 
+def refresh_board( board ):
+    mc_path = './data/{}-data'.format( board )
+
+    mc = MarkovChain( mc_path )
+
+    _ = analyze_board( mc, board )
+    
+    return
+    
+
 def load_or_train_board( board ):
     mc_path = './data/{}-data'.format( board )
     images_path = './data/{}-images'.format( board )

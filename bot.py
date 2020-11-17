@@ -62,7 +62,19 @@ async def load(ctx, board):
     if ctx.author.id == int(USER_ID):
         await ctx.send(f'Loading posts for {board}, bare with a few minutes...')
         mc, images = shitposter.load_or_train_board(cleansed_board)
-        await ctx.send(f'{board} loaded')
+        await ctx.send(f'/{cleansed_board}/ loaded')
+    else:
+        await ctx.send(f'Only Zoyd can load boards, ask him if you want a particular board :~)')
+
+@bot.command(name='refresh', help='Refreshes data for a board, only Zoyd can use this command.')
+async def refresh(ctx, board):
+
+    cleansed_board = board.replace( '/', '' )
+    
+    if ctx.author.id == int(USER_ID):
+        await ctx.send(f'Refreshing posts for {board}, bare with a few minutes...')
+        _, _ = shitposter.refresh_board(cleansed_board)
+        await ctx.send(f'/{cleansed_board}/ data refreshed')
     else:
         await ctx.send(f'Only Zoyd can load boards, ask him if you want a particular board :~)')
     
@@ -76,7 +88,7 @@ async def image(ctx, board):
             return
 
     if shitposter.board_loaded(cleansed_board) is False:
-        message = f'No data loaded for {board}, please use !load {board}'
+        message = f'No data loaded for /{cleansed_board}/, please use !load /{board}/'
     else:
         print(f'generating shitpost from {board}')
         mc, images = shitposter.load_or_train_board(cleansed_board)
@@ -92,7 +104,7 @@ async def boards(ctx):
 
     boards = '/, /'.join(loaded_boards)
 
-    await ctx.send(f'I have the following boards loaded!: {boards}')
+    await ctx.send(f'I have the following boards loaded!: /{boards}/')
 
 
 bot.run(TOKEN)
