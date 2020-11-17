@@ -62,11 +62,39 @@ async def load(ctx, board):
     if ctx.author.id == int(USER_ID):
         await ctx.send(f'Loading posts for {board}, bare with a few minutes...')
         mc, images = shitposter.load_or_train_board(cleansed_board)
-        await ctx.send(f'{board} loaded')
+        await ctx.send(f'/{cleansed_board}/ loaded')
     else:
         await ctx.send(f'Only Zoyd can load boards, ask him if you want a particular board :~)')
+
+
+@bot.command(name='refresh', help='Refreshes data for a board, only Zoyd can use this command.')
+async def refresh(ctx, board):
+
+    cleansed_board = board.replace( '/', '' )
     
-@bot.command(name='image', help='Posts a random image from a 4chan board: "!img /c/"')
+    if ctx.author.id == int(USER_ID):
+        await ctx.send(f'Refreshing posts for {board}, bare with a few minutes...')
+        _, _ = shitposter.refresh_board(cleansed_board)
+        await ctx.send(f'/{cleansed_board}/ data refreshed')
+    else:
+        await ctx.send(f'Only Zoyd can load boards, ask him if you want a particular board :~)')
+
+
+@bot.command(name='everything', help='Refreshes data for all boards, used very rarely.')
+async def refresh_all_boards(ctx):
+    
+    if ctx.author.id == int(USER_ID):
+        await ctx.send(f'Refreshing all loaded boards, this will take a while.')
+
+        loaded_boards = shitposter.reload_all_boards(ctx)
+        boards = '/, /'.join(loaded_boards)
+
+        await ctx.send(f'Data refreshed for boards: /{boards}/')
+    else:
+        await ctx.send(f'Yeah there\'s no way you\'re allowed to use this command pal')
+    
+
+@bot.command(name='image', help='Posts a random image from a 4chan board: "!image /c/"')
 async def image(ctx, board):
     cleansed_board = board.replace( '/', '' )
 
@@ -76,7 +104,7 @@ async def image(ctx, board):
             return
 
     if shitposter.board_loaded(cleansed_board) is False:
-        message = f'No data loaded for {board}, please use !load {board}'
+        message = f'No data loaded for /{cleansed_board}/, please use !load /{board}/'
     else:
         print(f'generating shitpost from {board}')
         mc, images = shitposter.load_or_train_board(cleansed_board)
@@ -92,7 +120,7 @@ async def boards(ctx):
 
     boards = '/, /'.join(loaded_boards)
 
-    await ctx.send(f'I have the following boards loaded!: {boards}')
+    await ctx.send(f'I have the following boards loaded!: /{boards}/')
 
 
 bot.run(TOKEN)
