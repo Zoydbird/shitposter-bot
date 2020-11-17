@@ -66,6 +66,7 @@ async def load(ctx, board):
     else:
         await ctx.send(f'Only Zoyd can load boards, ask him if you want a particular board :~)')
 
+
 @bot.command(name='refresh', help='Refreshes data for a board, only Zoyd can use this command.')
 async def refresh(ctx, board):
 
@@ -77,8 +78,23 @@ async def refresh(ctx, board):
         await ctx.send(f'/{cleansed_board}/ data refreshed')
     else:
         await ctx.send(f'Only Zoyd can load boards, ask him if you want a particular board :~)')
+
+
+@bot.command(name='everything', help='Refreshes data for all boards, used very rarely.')
+async def refresh_all_boards(ctx):
     
-@bot.command(name='image', help='Posts a random image from a 4chan board: "!img /c/"')
+    if ctx.author.id == int(USER_ID):
+        await ctx.send(f'Refreshing all loaded boards, this will take a while.')
+
+        loaded_boards = shitposter.reload_all_boards(ctx)
+        boards = '/, /'.join(loaded_boards)
+
+        await ctx.send(f'Data refreshed for boards: /{boards}/')
+    else:
+        await ctx.send(f'Yeah there\'s no way you\'re allowed to use this command pal')
+    
+
+@bot.command(name='image', help='Posts a random image from a 4chan board: "!image /c/"')
 async def image(ctx, board):
     cleansed_board = board.replace( '/', '' )
 

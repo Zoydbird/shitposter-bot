@@ -70,14 +70,40 @@ def analyze_board( mc, board ):
 
     return images
 
+
+def loaded_boards():
+    dirs = os.listdir('./data')
+
+    boards = []
+
+    for dir in dirs:
+        boards.append(re.split('-', dir)[0])
+
+    #unique the boards
+    unique_loaded_boards = list(set(boards))
+
+    return(unique_loaded_boards)   
+
+
 def refresh_board( board ):
     mc_path = './data/{}-data'.format( board )
 
     mc = MarkovChain( mc_path )
 
-    _ = analyze_board( mc, board )
+    images = analyze_board( mc, board )
     
-    return
+    return mc, images
+
+
+def reload_all_boards( ctx ) :
+    boards = loaded_boards()
+    finished_boards = []
+
+    for board in boards:
+        _, _ = refresh_board(board)
+        finished_boards.append(board)
+
+    return finished_boards
     
 
 def load_or_train_board( board ):
@@ -103,18 +129,6 @@ def board_loaded( board ):
 
     return True
 
-def loaded_boards():
-    dirs = os.listdir('./data')
-
-    boards = []
-
-    for dir in dirs:
-        boards.append(re.split('-', dir)[0])
-
-    #unique the boards
-    unique_loaded_boards = list(set(boards))
-
-    return(unique_loaded_boards)
 
 def grab_image(images, board):
     return 'http://i.4cdn.org/' + board + '/' + choice(images)
